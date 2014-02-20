@@ -2,14 +2,33 @@
 
 {% load static %} 
 
+<!--Load d3 javascript library -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 <html>
 
     <head>
         <title>Flickr Map</title>
+
+		<svg width="50" height="50">
+			  <circle cx="25" cy="25" r="25" fill="purple" />
+		</svg>
+
+		<svg width="50" height="50">
+			  <circle cx="25" cy="25" r="25" fill="purple" />
+		</svg>
+
+
+		<svg width="50" height="50">
+			  <circle cx="25" cy="25" r="10" fill="blue" />
+		</svg>
     </head>
 
     <body>
 	map
+	<img src="{% static "usaMap.jpg" %}" alt="Picture of USA" /> 
     </body>
 
 </html>
+
+
