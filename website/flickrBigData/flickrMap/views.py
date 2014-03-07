@@ -10,7 +10,16 @@ def index(request):
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'boldmessage': "I am bold font from the context"}
 
+    search(request)
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     return render_to_response('flickrMap/index.html', context_dict, context)
+
+def search(request):
+    if 'tag' in request.GET:
+	tag = request.GET['tag']
+    else:
+	tag = "No valid tag"
+
+    print tag
