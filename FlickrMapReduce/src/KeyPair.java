@@ -1,8 +1,8 @@
 
 
 public class KeyPair {
-	 private String tag;
-	 private String location;
+	  private String tag;
+	  private String location;
 	    public KeyPair(String tag, String location)
 	    {
 	        this.tag = tag;
