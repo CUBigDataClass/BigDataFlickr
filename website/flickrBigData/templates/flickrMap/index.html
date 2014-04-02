@@ -1,26 +1,74 @@
 <!DOCTYPE HTML>
 
 {% load static %}
+<!--src="{% static "map.png" %}"-->
 
 <html>
-<head>
-<title>Big Data Flickr Map</title>
-<link href="{% static "style.css" %}" rel="stylesheet" type="text/css">
-</head>
+  <head>
+    <title>Big Data Flickr Map</title>
+    <link href="{% static "style.css" %}" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 
-<body>
+    <!-- Draws the map -->
+    
+    <script>
+	var map;
 
-<div id="background">
-<img src="{% static "map.png" %}" width="100%" height="auto">
-</div>
+	function codeAddress(location) 
+	{
+		var geocoder;
+		geocoder = new google.maps.Geocoder();
+  		//var address = document.getElementById('address').value;
+  		address = location
+  		geocoder.geocode( { 'address': address}, function(results, status) 
+  		{
+    		if (status == google.maps.GeocoderStatus.OK) 
+			{
+      			map.setCenter(results[0].geometry.location);
+      			var marker = new google.maps.Marker({
+          		map: map,
+          		position: results[0].geometry.location
+      		});
+		console.log("Success");
+    	} 
+			else 
+			{
+      			alert('Geocode was not successful for the following reason: ' + status);
+    	   	}
+  	});
 
-<div class="bar">
-<img src="{% static "search.png" %}" width="34px" height="33px">
+	}
+	function initialize() {
+ 		var mapOptions = 
+ 		{
+    		zoom: 3,
+    		center: new google.maps.LatLng(20, -20)
+  		};
+  	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    console.log("init");
+	}
+    //Code to draw all of the markers
+	google.maps.event.addDomListener(window, 'load', initialize);
+  codeAddress("Denver, CO");
+  codeAddress("Bavaria, Germany");
+    </script>
 
+  </head>
+  <body>
+        <div class="bar">
 <form>
-
-Enter a Tag: <input type="text" name="tag" value="">
-<input type="submit" value="Submit">
+<input type="image" src="{% static "search.png" %}" width="24px" height="23px" alt="Submit form">
+<input type="text" name="tag" value="">
 
 <select name="timeposted">
 <option>Time Posted...</option>
@@ -95,5 +143,7 @@ Enter a Tag: <input type="text" name="tag" value="">
 </form>
 
 </div>
+    <div id="map-canvas"></div>
+  </body>
+</html>
 
-</body>
