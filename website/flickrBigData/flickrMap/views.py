@@ -12,14 +12,16 @@ def index(request):
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'boldmessage': "I am bold font from the context"}
 
-    search(request)
+    data = search(request)
     json_data = open('static/data.json').read()   
     jsonData = json.dumps(json_data)
+
+    print data
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
-    return render_to_response('flickrMap/index.html', context_dict, context)
-    #return render_to_response('flickrMap/index.html',{'tags':json_data})
+    #return render_to_response('flickrMap/index.html', context_dict, context)
+    return render_to_response('flickrMap/index.html', {'tags': data}, context)
 
 def search(request):
     if 'tag' in request.GET:
@@ -28,7 +30,7 @@ def search(request):
 	tag = "No valid tag"
 
     print tag
-    readData(request, tag)
+    return readData(request, tag)
 
 def readData(request, text):
     with open("static/data.json") as json_file:
@@ -43,8 +45,10 @@ def readData(request, text):
             num += 1
             locations.append(a['location'])
 
-    print num
+    #print num
     jsonLocations = json.dumps(locations)
     print jsonLocations
 
-    return HttpResponse(jsonLocations, mimetype='application/json')
+    #return HttpResponse(jsonLocations, content_type='application/json')
+    #return HttpResponse(jsonLocations)
+    return jsonLocations
