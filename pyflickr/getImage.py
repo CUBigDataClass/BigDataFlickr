@@ -2,6 +2,7 @@ import flickr
 import pymongo
 from pymongo import MongoClient
 import time
+from datetime import datetime
 
 # set up the mongoDB environment, including the database, collections
 client = MongoClient()
@@ -16,7 +17,7 @@ var=1
 while var==1:
 	#photos=flickr.photos_search(per_page='250',has_geo='true')
 	#get the latest image API
-	photos=flickr.photos_get_recent(per_page='250',extras='geo')
+	photos=flickr.photos_get_recent(per_page='500',extras='geo')
 	for photo in photos:
 		try:
 			pid= photo.id
@@ -47,4 +48,5 @@ while var==1:
 		#print tags
 		#time.sleep(2)
 	
-	time.sleep(1200)
+	time.sleep(300)
+	print datetime.now().strftime("%Y-%m-%d %H:%M:%S")
