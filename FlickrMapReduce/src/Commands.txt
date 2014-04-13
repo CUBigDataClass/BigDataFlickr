@@ -1,0 +1,15 @@
+*** Command to export Json document from MongoDB to local machine ***
+
+mongoexport -d mongo_hadoop -c please3 --out /home/gayatri/mongo_hadoop_code/taglocCount.json
+
+*** command to run the hadoop cluster, connect to MongoDB and run map reduce code ***
+
+./hadoop jar /home/gayatri/taglocation/taglocationCount.jar taglocationCount -D mongo.input.uri=mongodb://localhost:27017/mongo_hadoop.tagloc -D mongo.output.uri=mongodb://localhost:27017/mongo_hadoop.output
+
+*** compile java files with all the dependency jar files ***
+
+javac -classpath /home/gayatri/taglocation/jars/com.mongodb-2.5.2.jar:/home/gayatri/taglocation/jars/hadoop-common-2.0.0-alpha.jar:/home/gayatri/taglocation/jars/mongo-hadoop-core-1.0.0.jar:/home/gayatri/taglocation/jars/hadoop-mapreduce-client-core-2.0.2-alpha.jar -d /home/gayatri/taglocation/classes /home/gayatri/taglocation/jars/KeyPair.java /home/gayatri/taglocation/jars/taglocationCount.java
+
+*** Command to create Jar file ***
+
+jar -cvf /home/gayatri/taglocation/taglocationCount.jar -C /home/gayatri/taglocation/classes/ .
