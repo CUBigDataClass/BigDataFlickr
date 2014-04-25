@@ -40,14 +40,18 @@ def readData(request, text):
     locations = []
 
     for a in json_data:
-        string = a['Tag'].encode('ascii','ignore')
+        string = a["_id"]['tag'].encode('ascii','ignore')
         if text in string:
             num += 1
-            locations.append(a['location'])
+            if(a["_id"]['location'] in locations):
+                continue
+            else:
+                locations.append(a["_id"]['location'])
 
     #print num
     jsonLocations = json.dumps(locations)
     print jsonLocations
+    print num
 
     #return HttpResponse(jsonLocations, content_type='application/json')
     #return HttpResponse(jsonLocations)

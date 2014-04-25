@@ -16,7 +16,7 @@
         padding: 0px
       }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqzdLTHyIAB8ZqLUhihiTOOpJMQLVnOLQ&sensor=false"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 
     <!-- Draws the map -->
@@ -61,8 +61,10 @@
 
   var locations = {{ tags|safe}}
   var arrayLength = locations.length;
+
   for (var i = 0; i < arrayLength; i++) {
-      codeAddress(locations[i]);
+      setTimeout( codeAddress(locations[i]) , 2500 )
+        //codeAddress(locations[i]);
   }
     </script>
 
