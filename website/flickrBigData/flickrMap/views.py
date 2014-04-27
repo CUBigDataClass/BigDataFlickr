@@ -41,7 +41,7 @@ def readData(request, text):
 
     for a in json_data:
         string = a["_id"]['tag'].encode('ascii','ignore')
-        if text in string:
+        if text == string:
             num += 1
             if(a["_id"]['location'] in locations):
                 continue

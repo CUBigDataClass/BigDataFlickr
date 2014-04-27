@@ -23,27 +23,43 @@
     <script>
 	var map;
 
-	function codeAddress(location) 
+  //CodeAddress takes in a location and draws the marker and info window
+	function codeAddress(location, value) 
 	{
 		var geocoder;
 		geocoder = new google.maps.Geocoder();
   		//var address = document.getElementById('address').value;
-  		address = location
-  		geocoder.geocode( { 'address': address}, function(results, status) 
-  		{
-    		if (status == google.maps.GeocoderStatus.OK) 
+  	address = location
+  	geocoder.geocode( { 'address': address}, function(results, status) 
+  	{
+    	if (status == google.maps.GeocoderStatus.OK) 
 			{
-      			map.setCenter(results[0].geometry.location);
-      			var marker = new google.maps.Marker({
-          		map: map,
-          		position: results[0].geometry.location
-      		});
+        //Create a marker
+        map.setCenter(results[0].geometry.location);
+      	var marker = new google.maps.Marker
+        ({
+          map: map,
+          position: results[0].geometry.location,
+          title: results[0].formatted_address
+      	});
+        console.log(results[0].geometry.formatted_address)
+        //Create the Info Window   
+        var contentString = results[0].formatted_address + "<br>" + "Number of pictures = " + value;
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        //Event Listener to display the info window when a marker is clicked
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+
 		console.log("Success");
     	} 
 			else 
 			{
-      			alert('Geocode was not successful for the following reason: ' + status);
-    	   	}
+      	alert('Geocode was not successful for the following reason: ' + status);
+    	}
   	});
 
 	}
@@ -63,7 +79,7 @@
   var arrayLength = locations.length;
 
   for (var i = 0; i < arrayLength; i++) {
-       codeAddress(locations[i]);
+       codeAddress(locations[i], i);
       /*setTimeout(function() {
                 codeAddress(locations[i]);
           }, 2000);
