@@ -37,6 +37,7 @@ def readData(request, text):
         json_data = json.load(json_file)
 
     num = 0
+    resultDict = {}
     locations = []
 
     for a in json_data:
@@ -47,12 +48,15 @@ def readData(request, text):
                 continue
             else:
                 locations.append(a["_id"]['location'])
+                resultDict[a["_id"]['location']] = a['value']
 
-    #print num
+    #print resultDict
+    jsonDict = json.dumps(resultDict)
+    print jsonDict
     jsonLocations = json.dumps(locations)
-    print jsonLocations
+    #print jsonLocations
     print num
 
     #return HttpResponse(jsonLocations, content_type='application/json')
     #return HttpResponse(jsonLocations)
-    return jsonLocations
+    return jsonDict

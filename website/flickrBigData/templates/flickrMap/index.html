@@ -36,15 +36,27 @@
 			{
         //Create a marker
         map.setCenter(results[0].geometry.location);
+        if(value > 1)
+        {
       	var marker = new google.maps.Marker
         ({
           map: map,
           position: results[0].geometry.location,
-          title: results[0].formatted_address
+          title: results[0].formatted_address,
+          icon: "{% static "paleblue_MarkerX.png" %}"
       	});
+      }
+      else{
+                var marker = new google.maps.Marker
+        ({
+          map: map,
+          position: results[0].geometry.location,
+          title: results[0].formatted_address
+        });
+      }
         console.log(results[0].geometry.formatted_address)
         //Create the Info Window   
-        var contentString = results[0].formatted_address + "<br>" + "Number of pictures = " + value;
+        var contentString = results[0].formatted_address + "<br>" + "Number of Pictures = " + value;
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
@@ -72,19 +84,17 @@
   	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     console.log("init");
 	}
-    //Code to draw all of the markers
-	google.maps.event.addDomListener(window, 'load', initialize);
 
-  var locations = {{ tags|safe}}
-  var arrayLength = locations.length;
+//Code to draw all of the markers
+google.maps.event.addDomListener(window, 'load', initialize);
 
-  for (var i = 0; i < arrayLength; i++) {
-       codeAddress(locations[i], i);
-      /*setTimeout(function() {
-                codeAddress(locations[i]);
-          }, 2000);
-      console.log("here");*/
+var locations = {{ tags|safe}}
+
+for (var key in locations) {
+  if (locations.hasOwnProperty(key)) {
+    codeAddress(key, locations[key]);
   }
+}
     </script>
 
   </head>
